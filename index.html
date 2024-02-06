@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoplay Video with Random Music</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="showcase">
+        <div class="video-container">
+            <video id="videoPlayer" autoplay muted loop></video>
+        </div>
+        <div class="content">
+            <h1>VULTURES VOLUME 1</h1>
+            <center style="color: #05c6fc"><h2 id="quote" style="font-size:20px;"></h2></center>
+            <center style="color: #FCE205"><p id="demo" style="font-size:40px;"></p></center>
+            <!-- Change the font-size and style according to your preference -->
+        </div>
+    </section>
+
+    
+    <audio id="backgroundMusic" autoplay loop>
+        <source id="musicSource" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Array of video URLs
+        var vidArr = ["hoover.mp4", "mercy.mp4", "pablo.webm", "slowjamz.webm", "pablo.webm", "power.mp4", "blk.mp4", "fuksum.mp4"];
+
+        // Array of quotes
+        var quoteArr = [
+    "I feel like I'm too busy writing history to read it.",
+    "My greatest pain in life is that I will never be able to see myself perform live.",
+    "I am Warhol! I am the number one most impactful artist of our generation. I am Shakespeare in the flesh.",
+    "I liberate minds with my music. That's more important than liberating a few people from apartheid or whatever.",
+    "I'm doing pretty good as far as geniuses go.",
+    "I am God's vessel. But my greatest pain in life is that I will never be able to see myself perform live.",
+    "I think what Kanye West is going to mean is something similar to what Steve Jobs means. I am undoubtedly, you know, Steve of Internet, downtown, fashion, culture. Period. By a long jump.",
+    "I'm like a vessel, and God has chosen me to be the voice and the connector.",
+    "I don't even listen to rap. My apartment is too nice to listen to rap in.",
+    "I'm going down as a legend, whether or not you like me or not. I am the new Jim Morrison. I am the new Kurt Cobain.",
+    "I refuse to accept other people's ideas of happiness for me. As if there's a 'one size fits all' standard for happiness.",
+    "I'm not a fan of books. I would never want a book's autograph. I am a proud non-reader of books.",
+    "I don't know what's better, gettin' laid or gettin' paid.",
+    "And I'll just throw a Hamptons house party, what I'm 'posed to do?",
+    "I'm just trying to say the way school need teachers, the way Kathie Lee needed Regis, that's the way I need Jesus.",
+    "Reach for the stars, so if you fall, you land on a cloud.",
+    "Nothing in life is promised except death.",
+    "I'm living in the future so the present is my past. My presence is a present, kiss my ass.",
+    "I still think I am the greatest.",
+    "I'm on the pursuit of awesomeness, excellence is the bare minimum.",
+    "I feel like I'm too busy writing history to read it.",
+    "Believe in your flyness, conquer your shyness.",
+    "If you have the opportunity to play this game of life, you need to appreciate every moment. A lot of people don't appreciate their moment until it's passed.",
+    "My music isn't just music — it's medicine.",
+    "Keep your nose out the sky, keep your heart to god, and keep your face to the rising sun.",
+    "Creative output, you know, is just pain. I'm going to be cliché for a minute and say that great art comes from pain.",
+    "I am so credible and so influential and so relevant that I will change things.",
+    "I think I do myself a disservice by comparing myself to Steve Jobs and Walt Disney and human beings that we've seen before. It should be more like Willy Wonka... and welcome to my chocolate factory.",
+    "People always say that you can't please everybody. I think that's a cop-out. Why not attempt it? 'Cause think of all the people you will please if you try.",
+    "We all self-conscious. I'm just the first to admit it.",
+    "I'm not comfortable with comfort. I'm only comfortable when I'm in a place where I'm constantly learning and growing.",
+    "I'll say things that are serious and put them in a joke form so people can enjoy them. We laugh to keep from crying.",
+    "Sometimes I push the boundaries of what's acceptable just to see if I can.",
+    "I want the world to be better! All I want is positive! All I want is dopeness!",
+    "I'm just a creative, and I want to express how I feel.",
+    "I'm not going to sit here and defend (bleep)ing shit. That (bleep)ing industry pisses me the (bleep) off.",
+    "Visiting my mind is like visiting the Hermès factory. (bleep)ing think about it, it's like full level luxury.",
+    "I could never follow the rules and do what people told me to do. I couldn't do it in fashion, and I'm not going to do it in rap.",
+    "I want people to feel like it's okay to create. It's okay to not be boxed in. I want people to feel like awesome is possible.",
+    "I am not a fan of books. I would never want a book's autograph.",
+    "I'm not even gonna lie to you. I love me so much right now.",
+    "I'll say things that are serious and put them in a joke form so people can enjoy them. We laugh to keep from crying.",
+    "The only luxury is time. The time you spend with your family.",
+    "I am Warhol. I am the No. 1 most impactful artist of our generation. I am Shakespeare in the flesh.",
+    "I'm the closest that hip-hop is getting to God. In some situations, only clichés are true.",
+    "I don't even listen to rap. My apartment is too nice to listen to rap in.",
+    "I am a god. Hurry up with my damn massage. Hurry up with my damn menage. Get the Porsche out the damn garage.",
+    "You should only believe about 90 percent of what I say. As a matter of fact, don't even believe anything that I'm saying at all. I could be completely fucking with you, and the world, the entire time.",
+    "I know I got angels watching me from the other side.",
+    "I feel like a little bit, like, I'm the Braveheart of creativity.",
+    "I'm so gifted at finding what I don't like the most.",
+    "People say I have a bad reputation. I think I've got the best reputation in the building.",
+    "The greatest pain in life is not being hated, but being ignored.",
+    "I am in the lineage of Gil Scott-Heron, great activist-type artists. But I'm also in the lineage of a Miles Davis — you know, that liked nice things also.",
+    "I care about everything that happens to you because I am you.",
+    "I'm forever the 35-year-old 5-year-old.",
+    "I'm not interested in things unless they hit me in a certain place in my heart. I get bored really easily. I'm like majorly underwhelmed in general.",
+    "I'm a creative genius, and I want to express how I feel."
+];
+
+        // Select a random video from vidArr[]
+        var randomIndex = Math.floor(Math.random() * vidArr.length);
+        var randomVideo = vidArr[randomIndex];
+
+        // Set the selected video as the source of the video player sussy baka
+        document.getElementById("videoPlayer").src = randomVideo;
+
+        // Displays random QUOTE 
+        var randomQuoteIndex = Math.floor(Math.random() * quoteArr.length);
+        document.getElementById("quote").innerHTML = quoteArr[randomQuoteIndex];
+
+        // Select a random music file from 1.mp3 to 19.mp3
+        var randomMusicIndex = Math.floor(Math.random() * 19) + 1;
+        var musicSource = "music/" + randomMusicIndex + ".mp3";
+        document.getElementById("musicSource").src = musicSource;
+        document.getElementById("backgroundMusic").load(); // Reload the audio element to apply the new source
+        
+
+        var countDownDate = new Date("Feb 9, 2024 00:00:25").getTime();
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
