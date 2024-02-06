@@ -9,7 +9,7 @@
 <body>
     <section class="showcase">
         <div class="video-container">
-            <video id="videoPlayer" autoplay muted loop></video>
+            <video id="videoPlayer" autoplay muted></video>
         </div>
         <div class="content">
             <h1>VULTURES VOLUME 1</h1>
@@ -97,6 +97,13 @@
         // Set the selected video as the source of the video player sussy baka
         document.getElementById("videoPlayer").src = randomVideo;
 
+        // Switch to a different video after the first video ends
+        document.getElementById("videoPlayer").addEventListener('ended', function() {
+            var randomIndex = Math.floor(Math.random() * vidArr.length);
+            var randomVideo = vidArr[randomIndex];
+            document.getElementById("videoPlayer").src = randomVideo;
+        });
+
         // Displays random QUOTE 
         var randomQuoteIndex = Math.floor(Math.random() * quoteArr.length);
         document.getElementById("quote").innerHTML = quoteArr[randomQuoteIndex];
@@ -106,6 +113,14 @@
         var musicSource = "music/" + randomMusicIndex + ".mp3";
         document.getElementById("musicSource").src = musicSource;
         document.getElementById("backgroundMusic").load(); // Reload the audio element to apply the new source
+
+        // Switch to a different audio file after the first audio file ends
+        document.getElementById("backgroundMusic").addEventListener('ended', function() {
+            var randomMusicIndex = Math.floor(Math.random() * 19) + 1;
+            var musicSource = "music/" + randomMusicIndex + ".mp3";
+            document.getElementById("musicSource").src = musicSource;
+            document.getElementById("backgroundMusic").load();
+        }); 
         
 
         var countDownDate = new Date("Feb 9, 2024 00:00:25").getTime();
