@@ -137,6 +137,39 @@
                 document.getElementById("demo").innerHTML = "IT'S VULTURIN' TIME.";
             }
         }, 1000);
+
+        // Adding keyboard event listener
+        document.addEventListener('keydown', function(event) {
+            // Check if the key pressed is 'c', 'o', 'l', 'e' sequentially
+            if (event.key === 'c') {
+                if (!document.cPressed) {
+                    document.cPressed = true;
+                }
+            } else if (event.key === 'o' && document.cPressed) {
+                if (!document.oPressed) {
+                    document.oPressed = true;
+                }
+            } else if (event.key === 'l' && document.oPressed) {
+                if (!document.lPressed) {
+                    document.lPressed = true;
+                }
+            } else if (event.key === 'e' && document.lPressed) {
+                if (!document.ePressed) {
+                    document.ePressed = true;
+                }
+            } else {
+                // Reset if any other key is pressed
+                document.cPressed = false;
+                document.oPressed = false;
+                document.lPressed = false;
+                document.ePressed = false;
+            }
+
+            // Redirect to cole.com if 'cole' is typed
+            if (document.cPressed && document.oPressed && document.lPressed && document.ePressed) {
+                window.location.href = "https://cole.com";
+            }
+            });
     </script>
 </body>
 </html>
